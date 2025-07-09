@@ -58,11 +58,11 @@ describe('Web Tables page', () => {
   });
 
   it('user should be able to delete all workers', () => {
-    const numberOfRows = Cypress.$('[role="rowgroup"]').find(
-      'span[title="Delete"]'
-    ).length;
+    const numberOfRows = () => {
+      cy.get('[role="rowgroup"]').find('span[title="Delete"]').its('length');
+    };
 
-    for (let i = 1; i < numberOfRows + 1; i++) {
+    for (let i = 1; i < numberOfRows() + 1; i++) {
       cy.get(`#delete-record-${i}`).should('be.visible').click();
     }
   });
