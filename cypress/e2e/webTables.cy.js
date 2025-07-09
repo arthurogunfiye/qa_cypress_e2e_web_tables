@@ -1,3 +1,4 @@
+/* eslint-disable */
 /// <reference types='cypress' />
 import { faker } from '@faker-js/faker';
 
@@ -59,12 +60,17 @@ describe('Web Tables page', () => {
 
   it('user should be able to delete all workers', () => {
     const numberOfRows = () => {
-      cy.get('[role="rowgroup"]').find('span[title="Delete"]').its('length');
+      return cy
+        .get('[role="rowgroup"]')
+        .find('span[title="Delete"]')
+        .its('length');
     };
 
-    for (let i = 1; i < numberOfRows() + 1; i++) {
-      cy.get(`#delete-record-${i}`).should('be.visible').click();
-    }
+    numberOfRows().then(count => {
+      for (let i = 1; i <= count; i++) {
+        cy.get(`#delete-record-${i}`).should('be.visible').click();
+      }
+    });
   });
 
   it('user should be able to edit a worker', () => {
